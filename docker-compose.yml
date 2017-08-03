@@ -1,0 +1,22 @@
+version: '2.2'
+
+services:
+  kafka:
+    image: 'spotify/kafka'
+    environment:
+      - ADVERTISED_PORT=9092
+      - ADVERTISED_HOST=kafka
+
+  producer:
+    build: app
+    environment:
+      - SERVICE=producer.py
+    depends_on:
+      - kafka
+
+  consumer:
+    build: app
+    environment:
+      - SERVICE=consumer.py
+    depends_on:
+      - kafka
